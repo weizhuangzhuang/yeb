@@ -8,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.zzwei.server.mapper")
 public class YebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(YebApplication.class,args);
+        SpringApplication.run(YebApplication.class, args);
     }
 }

@@ -13,7 +13,6 @@ import java.util.Map;
 
 /**
  * JwtToken工具类
- *
  */
 @Component
 public class JwtTokenUtil {
@@ -36,16 +35,16 @@ public class JwtTokenUtil {
     //5.刷新token
 
     /**
-     *
      * 1.根据用户信息生成token
+     *
      * @param userDetails
      * @return
      */
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails) {
         //准备存放token的容器(荷载)
-        Map<String , Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         //从security框架UserDetails中获取用户名
-        claims.put(CLAIM_KEY_USERNAME , userDetails.getUsername());
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         //创建时间为当前时间
         claims.put(CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
@@ -53,10 +52,11 @@ public class JwtTokenUtil {
 
     /**
      * 4.从token中获取登录用户名
+     *
      * @param token
      * @return
      */
-    public String getUsernameFromToken(String token){
+    public String getUsernameFromToken(String token) {
         String username;
         //从token中获取荷载
         try {
@@ -70,16 +70,18 @@ public class JwtTokenUtil {
 
     /**
      * 6.验证token是否有效
+     *
      * @param token
      * @param userDetails
      * @return
      */
-    public boolean vaildateToken(String token , UserDetails userDetails) {
+    public boolean vaildateToken(String token, UserDetails userDetails) {
         return getUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     /**
      * 7.判断token是否失效
+     *
      * @param token
      * @return
      */
@@ -92,6 +94,7 @@ public class JwtTokenUtil {
 
     /**
      * 8.从token中获取过期时间
+     *
      * @param token
      * @return
      */
@@ -104,29 +107,32 @@ public class JwtTokenUtil {
 
     /**
      * 9.判断token是否可以被刷新
+     *
      * @param token
      * @return
      */
-    public boolean canRefresh(String token){
+    public boolean canRefresh(String token) {
         return !isTokenExpired(token);
     }
 
     /**
      * 10.刷新token过期时间
+     *
      * @param token
      * @return
      */
-    public String refreshToken(String token){
+    public String refreshToken(String token) {
         //获取荷载
-        Claims claims =  getClaimsFormToken(token);
+        Claims claims = getClaimsFormToken(token);
         //通过荷载设置创建时间改为当前时间
-        claims.put(CLAIM_KEY_CREATED , new Date());
+        claims.put(CLAIM_KEY_CREATED, new Date());
         //生成token
         return generateToken(claims);
     }
+
     /**
-     *
      * 5.从token获取荷载
+     *
      * @param token
      * @return
      */
@@ -137,7 +143,7 @@ public class JwtTokenUtil {
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return claims;
@@ -145,6 +151,7 @@ public class JwtTokenUtil {
 
     /**
      * 2.根据荷载生成JWT token
+     *
      * @param claims
      * @return
      */
@@ -152,12 +159,13 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512,secret)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
     /**
      * 3.生成token失效时间
+     *
      * @return
      */
     private Date generateExpirationDate() {
