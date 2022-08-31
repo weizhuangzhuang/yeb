@@ -3,6 +3,8 @@ package com.zzwei.server.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzwei.server.pojo.Menu;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,10 @@ import com.zzwei.server.pojo.Menu;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    /**
+     * 根据用户id获取菜单列表
+     * @param id
+     * @return
+     */
+    List<Menu> getMenusByAdminId(Integer id);
 }

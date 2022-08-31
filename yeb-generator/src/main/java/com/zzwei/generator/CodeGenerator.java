@@ -46,23 +46,27 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/yeb-generator/src/main/java");
         gc.setAuthor("zzwei");
         gc.setOpen(false);
+        //xml开启 BaseResultMap
+        gc.setBaseResultMap(true);
+        //xml开启 BaseColumnList
+        gc.setBaseColumnList(true);
         //实体属性 Swagger2 注解
         gc.setSwagger2(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://172.27.178.1:1081/zjfx?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/yeb?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("eic");
-        dsc.setPassword("ZOge!jOE6uqV");
+        dsc.setUsername("root");
+        dsc.setPassword("weizhuang1994");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.zzwei.server")
+        pc.setParent("com.zzwei")
                 .setEntity("pojo")
                 .setController("controller")
                 .setService("service")
