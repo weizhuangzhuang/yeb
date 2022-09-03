@@ -2,9 +2,11 @@ package com.zzwei.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzwei.server.pojo.Admin;
+import com.zzwei.server.pojo.Role;
 import com.zzwei.server.utils.RespBean;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -33,4 +35,13 @@ public interface IAdminService extends IService<Admin> {
      * @return
      */
     Admin getAdminByUserName(String username);
+
+
+    /**
+     * 根据用户id查询角色列表
+     *
+     * @param adminId
+     * @return
+     */
+    List<Role> getRoles(Integer adminId);
 }
