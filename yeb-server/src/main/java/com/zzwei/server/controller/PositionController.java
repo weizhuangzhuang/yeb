@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Api(tags = "职位相关接口")
 @RestController
-@RequestMapping("/system/cfg/pos")
+@RequestMapping("/system/basic/pos")
 public class PositionController {
 
     @Autowired
