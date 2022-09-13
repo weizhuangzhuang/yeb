@@ -4,40 +4,113 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zzwei.server.pojo.Employee">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="gender" property="gender" />
-        <result column="birthday" property="birthday" />
-        <result column="idCard" property="idCard" />
-        <result column="wedlock" property="wedlock" />
-        <result column="nationId" property="nationId" />
-        <result column="nativePlace" property="nativePlace" />
-        <result column="politicId" property="politicId" />
-        <result column="email" property="email" />
-        <result column="phone" property="phone" />
-        <result column="address" property="address" />
-        <result column="departmentId" property="departmentId" />
-        <result column="jobLevelId" property="jobLevelId" />
-        <result column="posId" property="posId" />
-        <result column="engageForm" property="engageForm" />
-        <result column="tiptopDegree" property="tiptopDegree" />
-        <result column="specialty" property="specialty" />
-        <result column="school" property="school" />
-        <result column="beginDate" property="beginDate" />
-        <result column="workState" property="workState" />
-        <result column="workID" property="workID" />
-        <result column="contractTerm" property="contractTerm" />
-        <result column="conversionTime" property="conversionTime" />
-        <result column="notWorkDate" property="notWorkDate" />
-        <result column="beginContract" property="beginContract" />
-        <result column="endContract" property="endContract" />
-        <result column="workAge" property="workAge" />
-        <result column="salaryId" property="salaryId" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="idCard" property="idCard"/>
+        <result column="wedlock" property="wedlock"/>
+        <result column="nationId" property="nationId"/>
+        <result column="nativePlace" property="nativePlace"/>
+        <result column="politicId" property="politicId"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="departmentId" property="departmentId"/>
+        <result column="jobLevelId" property="jobLevelId"/>
+        <result column="posId" property="posId"/>
+        <result column="engageForm" property="engageForm"/>
+        <result column="tiptopDegree" property="tiptopDegree"/>
+        <result column="specialty" property="specialty"/>
+        <result column="school" property="school"/>
+        <result column="beginDate" property="beginDate"/>
+        <result column="workState" property="workState"/>
+        <result column="workID" property="workID"/>
+        <result column="contractTerm" property="contractTerm"/>
+        <result column="conversionTime" property="conversionTime"/>
+        <result column="notWorkDate" property="notWorkDate"/>
+        <result column="beginContract" property="beginContract"/>
+        <result column="endContract" property="endContract"/>
+        <result column="workAge" property="workAge"/>
+        <result column="salaryId" property="salaryId"/>
     </resultMap>
 
+    <resultMap id="EmployeeInfo" type="com.zzwei.server.pojo.Employee" extends="BaseResultMap">
+        <association property="nation" javaType="com.zzwei.server.pojo.Nation">
+            <id column="tnid" property="id"/>
+            <result column="tnname" property="name"/>
+        </association>
+        <association property="politicsStatus" javaType="com.zzwei.server.pojo.PoliticsStatus">
+            <id column="tpid" property="id"/>
+            <result column="tpname" property="name"/>
+        </association>
+        <association property="department" javaType="com.zzwei.server.pojo.Department">
+            <id column="tdid" property="id"/>
+            <result column="tdname" property="name"/>
+        </association>
+        <association property="position" javaType="com.zzwei.server.pojo.Position">
+            <id column="tposid" property="id"/>
+            <result column="tposname" property="name"/>
+        </association>
+        <association property="joblevel" javaType="com.zzwei.server.pojo.Joblevel">
+            <id column="tjid" property="id"/>
+            <result column="tjname" property="name"/>
+        </association>
+
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge, salaryId
+        id
+        , name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge, salaryId
     </sql>
+    <select id="getEmployeeByPage" resultMap="EmployeeInfo">
+        SELECT te.*,
+        tn.id AS tnid,
+        tn.NAME AS tnname,
+        tp.id AS tpid,
+        tp.`name` AS tpname,
+        td.id AS tdid,
+        td.`name` AS tdname,
+        tpos.id AS tposid,
+        tpos.`name` AS tposname,
+        tj.id AS tjid,
+        tj.`name` AS tjname
+        FROM t_employee te,
+        t_nation tn,
+        t_politics_status tp,
+        t_department td,
+        t_position tpos,
+        t_joblevel tj
+        WHERE te.nationId = tn.id
+        AND te.politicId = tp.id
+        AND te.departmentId = td.id
+        AND te.posId = tpos.id
+        AND te.jobLevelId = tj.id
+        <if test="null != employee.name and ''!= employee.name">
+            AND te.NAME LIKE concat('%', #{employee.name}, '%')
+        </if>
+        <if test="null != employee.nationId">
+            AND te.nationId = #{employee.nationId}
+        </if>
+        <if test="null != employee.politicId">
+            AND te.politicId = #{employee.politicId}
+        </if>
+        <if test="null != employee.posId">
+            AND te.posId = #{employee.posId}
+        </if>
+        <if test="null != employee.jobLevelId">
+            AND te.jobLevelId = #{employee.jobLevelId}
+        </if>
+        <if test="null != employee.engageForm and ''!= employee.engageForm">
+            AND te.engageForm = #{employee.engageForm}
+        </if>
+        <if test="null != employee.departmentId">
+            AND te.departmentId = #{employee.departmentId}
+        </if>
+        <if test="null != beginDateScope and 2 == beginDateScope.length">
+            AND te.beginDate BETWEEN #{beginDateScope[0]} AND #{beginDateScope[1]}
+        </if>
+        ORDER BY te.id
+    </select>
 
 </mapper>

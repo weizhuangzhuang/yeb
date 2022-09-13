@@ -3,6 +3,7 @@ package com.zzwei.server.controller;
 
 import com.zzwei.server.pojo.Menu;
 import com.zzwei.server.service.IMenuService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author zzwei
  * @since 2022-08-19
  */
+@Api(tags = "菜单相关接口")
 @RestController
 @RequestMapping("/system/cfg")
 public class MenuController {

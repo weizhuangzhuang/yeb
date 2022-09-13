@@ -18,7 +18,7 @@ import java.security.Principal;
 /**
  * 用户登录
  */
-@Api(tags = "LoginController")
+@Api(tags = "登录相关接口")
 @RestController
 public class LoginController {
 
