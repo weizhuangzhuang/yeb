@@ -7,6 +7,7 @@ import com.zzwei.server.pojo.Employee;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -27,4 +28,11 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
      * @return
      */
     IPage<Employee> getEmployeeByPage(@Param("page") Page<Employee> page, @Param("employee") Employee employee, @Param("beginDateScope") LocalDate[] beginDateScope);
+
+    /**
+     * 员工查询
+     * @param id
+     * @return
+     */
+    List<Employee> getEmployee(Integer id);
 }

@@ -83,5 +83,16 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
     }
 
+    /**
+     * 员工查询
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Employee> getEmployee(Integer id) {
+        return employeeMapper.getEmployee(id);
+    }
+
 
 }

@@ -6,6 +6,7 @@ import com.zzwei.server.utils.RespBean;
 import com.zzwei.server.utils.RespPageBean;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -42,4 +43,10 @@ public interface IEmployeeService extends IService<Employee> {
      * @return
      */
     RespBean addEmployee(Employee employee);
+
+    /**
+     * 员工查询
+     * @param id
+     */
+    List<Employee> getEmployee(Integer id);
 }

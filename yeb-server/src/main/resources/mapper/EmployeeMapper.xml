@@ -112,5 +112,33 @@
         </if>
         ORDER BY te.id
     </select>
+    <select id="getEmployee" resultMap="EmployeeInfo">
+        SELECT te.*,
+        tn.id AS tnid,
+        tn.NAME AS tnname,
+        tp.id AS tpid,
+        tp.`name` AS tpname,
+        td.id AS tdid,
+        td.`name` AS tdname,
+        tpos.id AS tposid,
+        tpos.`name` AS tposname,
+        tj.id AS tjid,
+        tj.`name` AS tjname
+        FROM t_employee te,
+        t_nation tn,
+        t_politics_status tp,
+        t_department td,
+        t_position tpos,
+        t_joblevel tj
+        WHERE te.nationId = tn.id
+        AND te.politicId = tp.id
+        AND te.departmentId = td.id
+        AND te.posId = tpos.id
+        AND te.jobLevelId = tj.id
+        <if test="null != id">
+            AND te.id = #{id}
+        </if>
+        ORDER BY te.id
+    </select>
 
 </mapper>
