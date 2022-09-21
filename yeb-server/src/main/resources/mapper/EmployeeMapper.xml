@@ -56,7 +56,27 @@
             <id column="tjid" property="id"/>
             <result column="tjname" property="name"/>
         </association>
+    </resultMap>
 
+    <resultMap id="EmployeeSalaryInfo" type="com.zzwei.server.pojo.Employee" extends="BaseResultMap">
+        <association property="salary" javaType="com.zzwei.server.pojo.Salary">
+            <id column="sid" property="id"/>
+            <result column="sbasicSalary" property="basicSalary"/>
+            <result column="sbonus" property="bonus"/>
+            <result column="slunchSalary" property="lunchSalary"/>
+            <result column="strafficSalary" property="trafficSalary"/>
+            <result column="sallSalary" property="allSalary"/>
+            <result column="spensionBase" property="pensionBase"/>
+            <result column="spensionPer" property="pensionPer"/>
+            <result column="smedicalBase" property="medicalBase"/>
+            <result column="smedicalPer" property="medicalPer"/>
+            <result column="saccumulationFundBase" property="accumulationFundBase"/>
+            <result column="saccumulationFundPer" property="accumulationFundPer"/>
+            <result column="sname" property="name"/>
+        </association>
+        <association property="department" javaType="com.zzwei.server.pojo.Department">
+            <result column="dname" property="name"></result>
+        </association>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -139,6 +159,30 @@
             AND te.id = #{id}
         </if>
         ORDER BY te.id
+    </select>
+    <!--  分页查询员工工资套账  -->
+    <select id="getEmpSalaryByPage" resultMap="EmployeeSalaryInfo">
+        select te.*,
+        ts.id as sid,
+        ts.basicSalary as sbasicSalary,
+        ts.bonus as sbonus,
+        ts.lunchSalary as slunchSalary,
+        ts.trafficSalary as strafficSalary,
+        ts.allSalary as sallSalary,
+        ts.pensionBase as spensionBase,
+        ts.pensionPer as spensionPer,
+        ts.medicalBase as smedicalBase,
+        ts.medicalPer as smedicalPer,
+        ts.accumulationFundBase saccumulationFundBase,
+        ts.accumulationFundPer as saccumulationFundPer,
+        ts.`name` as sname,
+        td.`name` as dname
+        from t_employee te
+        left join t_salary ts on te.salaryId = ts.id
+        left join t_department td on te.departmentId = td.id
+        <if test="null != employee.name and ''!= employee.name">
+            where te.NAME LIKE concat('%', #{employee.name}, '%')
+        </if>
     </select>
 
 </mapper>
