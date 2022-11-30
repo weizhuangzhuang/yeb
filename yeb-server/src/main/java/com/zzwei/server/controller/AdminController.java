@@ -33,6 +33,7 @@ public class AdminController {
 
     /**
      * 获取所有人员信息
+     *
      * @param keywords
      * @return
      */
@@ -44,6 +45,7 @@ public class AdminController {
 
     /**
      * 更新管理员信息
+     *
      * @param admin
      * @return
      */
@@ -59,6 +61,7 @@ public class AdminController {
 
     /**
      * 删除管理员信息
+     *
      * @param id
      * @return
      */
@@ -74,24 +77,26 @@ public class AdminController {
 
     /**
      * 获取所有角色
+     *
      * @return
      */
     @ApiOperation(value = "获取所有角色")
     @GetMapping("/roles")
-    public List<Role> getAllRoles(){
+    public List<Role> getAllRoles() {
         return roleService.list();
     }
 
     /**
      * 根据用户id更新角色
+     *
      * @param adminId
      * @param rids
      * @return
      */
     @ApiOperation(value = "更新操作员角色")
     @PutMapping("/role")
-    public RespBean updateAdminRole(Integer adminId , Integer[] rids){
-        return adminService.updateAdminRole(adminId,rids);
+    public RespBean updateAdminRole(Integer adminId, Integer[] rids) {
+        return adminService.updateAdminRole(adminId, rids);
     }
 
 }

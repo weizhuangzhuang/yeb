@@ -38,6 +38,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
                 return SecurityConfig.createList(str);
             }
         }
+        //登录即可访问角色
         return SecurityConfig.createList("ROLE_LOGIN");
     }
 

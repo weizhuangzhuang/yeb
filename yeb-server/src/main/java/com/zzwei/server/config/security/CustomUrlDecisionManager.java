@@ -20,6 +20,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
         for (ConfigAttribute configAttribute : collection) {
+            //当前url所需要的角色
             String needRole = configAttribute.getAttribute();
             if ("ROLE_LOGIN".equals(needRole)) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
@@ -28,6 +29,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
                     return;
                 }
             }
+            //判断用户角色是否为url所需角色
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for(GrantedAuthority authority : authorities){
                 if(authority.getAuthority().equals(needRole)){

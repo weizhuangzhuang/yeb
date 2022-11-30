@@ -11,6 +11,7 @@ import com.zzwei.server.pojo.AdminRole;
 import com.zzwei.server.pojo.Role;
 import com.zzwei.server.service.IAdminService;
 import com.zzwei.server.utils.AdminUtils;
+import com.zzwei.server.utils.RSAUtils;
 import com.zzwei.server.utils.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,13 +65,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
      */
     @Override
     public RespBean login(String username, String password, String code, HttpServletRequest request) {
+        System.out.println(username + "====" + RSAUtils.decryptBase64(username));
+        System.out.println(password + "====" + RSAUtils.decryptBase64(password));
+        System.out.println(code + "====" + RSAUtils.decryptBase64(code));
+        //RSAUtils.decryptBase64(username); //对加密的用户名解密
+        //RSAUtils.decryptBase64(password);//对加密的密码解密
         String captcha = (String) request.getSession().getAttribute("captcha");
-        if (StringUtils.isEmpty(captcha) || !captcha.equalsIgnoreCase(code)) {
+        if (StringUtils.isEmpty(captcha) || !captcha.equalsIgnoreCase(RSAUtils.decryptBase64(code))) {
             return RespBean.error("验证码输入错误，请重新输入");
         }
         //登录
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        if (null == userDetails || !passwordEncoder.matches(password, userDetails.getPassword())) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(RSAUtils.decryptBase64(username));
+        if (null == userDetails || !passwordEncoder.matches(RSAUtils.decryptBase64(password), userDetails.getPassword())) {
             return RespBean.error("用户名或密码不正确");
         }
         if (!userDetails.isEnabled()) {

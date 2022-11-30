@@ -1,5 +1,7 @@
 package com.zzwei.server.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ShearCaptcha;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,8 +26,39 @@ public class CaptchaController {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
+    @ApiOperation(value = "验证码1")
+    @GetMapping(value = "/hu-captcha", produces = "image/jpeg")
+    public void hucaptcha(HttpServletRequest request, HttpServletResponse response) {
+        // 定义 response 输出类型为 image/jpeg 类型
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Cache-Control", "no-store,no-cache,must-revalidate");
+        response.addHeader("Cache-Control", "post-check=0,pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setContentType("image/jpeg");
+        ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(100, 40, 4, 4);
+        System.out.println(shearCaptcha.getCode());
+        request.getSession().setAttribute("captcha", shearCaptcha.getCode());
+        ServletOutputStream outputStream = null;
+        try {
+            outputStream = response.getOutputStream();
+            shearCaptcha.write(outputStream);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != outputStream) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     @ApiOperation(value = "验证码")
-    @GetMapping(value = "/captcha",produces = "image/jpeg")
+    @GetMapping(value = "/captcha", produces = "image/jpeg")
     public void captcha(HttpServletRequest request, HttpServletResponse response) {
         // 定义 response 输出类型为 image/jpeg 类型
         response.setDateHeader("Expires", 0);
