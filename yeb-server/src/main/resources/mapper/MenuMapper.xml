@@ -59,6 +59,7 @@
         , url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
     </sql>
 
+
     <select id="getMenusByAdminId" resultMap="Menus">
         SELECT tm.*,
                a.id          as id2,

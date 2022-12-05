@@ -43,6 +43,12 @@ public class AdminController {
         return adminService.getAllAdmin(keywords);
     }
 
+    @ApiOperation(value = "根据角色id查询人员")
+    @GetMapping("/admin/{rid}")
+    public List<Admin> queryAdminByRid(@PathVariable Integer rid){
+        return roleService.queryAdminByRid(rid);
+    }
+
     /**
      * 更新管理员信息
      *

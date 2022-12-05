@@ -2,6 +2,7 @@ package com.zzwei.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzwei.server.pojo.Menu;
+import com.zzwei.server.utils.RespBean;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     List<Menu> getAllMenus();
+
+    RespBean delMenuById(Integer id);
 }

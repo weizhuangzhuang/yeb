@@ -2,13 +2,13 @@ package com.zzwei.server.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzwei.server.mapper.MenuMapper;
-import com.zzwei.server.pojo.Admin;
 import com.zzwei.server.pojo.Menu;
 import com.zzwei.server.service.IMenuService;
+import com.zzwei.server.utils.AdminUtils;
+import com.zzwei.server.utils.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -37,7 +37,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     @Override
     public List<Menu> getMenusByAdminId() {
-        Integer adminId = ((Admin) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        Integer adminId = AdminUtils.getAdminInfo().getId();
         System.out.println(adminId);
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         List<Menu> menus = (List<Menu>) valueOperations.get("menu_" + adminId);
@@ -52,6 +52,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     /**
      * 根据角色获取菜单列表
+     *
      * @return
      */
     @Override
@@ -61,10 +62,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     /**
      * 查询所有菜单
+     *
      * @return
      */
     @Override
     public List<Menu> getAllMenus() {
         return menuMapper.getAllMenus();
+    }
+
+    @Override
+    public RespBean delMenuById(Integer id) {
+        if (1 == menuMapper.deleteById(id)) {
+            return RespBean.success("菜单删除成功");
+        } else {
+            return RespBean.error("菜单删除失败");
+        }
+
     }
 }

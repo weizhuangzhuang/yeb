@@ -48,4 +48,16 @@
         order by a.id
     </select>
 
+    <select id="queryAdminByRid" resultMap="AdminWithRole">
+        select a.*,
+               r.id as rid,
+               r.`name` as rname,
+               r.nameZh as rnameZh
+        from t_admin a
+                 left join t_admin_role ar on a.id = ar.adminId
+                 left join t_role r on r.id = ar.rid
+        where ar.rid = #{rid}
+        order by a.id
+    </select>
+
 </mapper>

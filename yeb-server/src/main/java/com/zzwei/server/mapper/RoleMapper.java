@@ -22,4 +22,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @return
      */
     List<Role> getRoles(Integer adminId);
+
+
 }

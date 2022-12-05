@@ -33,4 +33,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return
      */
     List<Menu> getAllMenus();
+
+
 }

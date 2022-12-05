@@ -34,9 +34,8 @@ public class LoginController {
      */
     @ApiOperation(value = "登录前生成公钥")
     @PostMapping("/getPublicKey")
-    public RespBean getPublicKey(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception{
-        String publicKey = RSAUtils.generateBase64PublicKey();
-        return RespBean.success("获取公钥信息成功",publicKey);
+    public String getPublicKey(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception{
+        return RSAUtils.generateBase64PublicKey();
     }
 
 
