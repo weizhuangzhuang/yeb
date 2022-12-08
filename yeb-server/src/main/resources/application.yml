@@ -4,9 +4,12 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yeb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: weizhuang1994
+    #url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://172.27.178.1:1081/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    #username: root
+    #password: weizhuang1994
+    username: eic
+    password: ZOge!jOE6uqV
     hikari:
       pool-name: DateHikariCP
       minimum-idle: 5

@@ -33,6 +33,18 @@ public class MenuController {
         return menuService.getMenusByAdminId();
     }
 
+    /**
+     * 新增菜单
+     *
+     * @param menu
+     * @return
+     */
+    @ApiOperation(value = "添加菜单")
+    @PostMapping("/addmenu")
+    public RespBean addMenu(@RequestBody Menu menu) {
+        return menuService.addDepartment(menu);
+    }
+
     @ApiOperation(value = "根据菜单id删除菜单")
     @DeleteMapping("/menu/{id}")
     public RespBean delMenuById(@PathVariable Integer id) {

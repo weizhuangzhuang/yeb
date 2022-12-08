@@ -67,7 +67,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     @Override
     public List<Menu> getAllMenus() {
-        return menuMapper.getAllMenus();
+        return menuMapper.getAllMenus(-1);
     }
 
     @Override
@@ -78,5 +78,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             return RespBean.error("菜单删除失败");
         }
 
+    }
+
+    @Override
+    public RespBean addDepartment(Menu menu) {
+        //menu.setEnabled(true);
+        if (1 == menuMapper.insert(menu)) {
+            return RespBean.success("菜单新增成功", menu);
+        } else {
+            return RespBean.error("菜单新增失败");
+        }
     }
 }

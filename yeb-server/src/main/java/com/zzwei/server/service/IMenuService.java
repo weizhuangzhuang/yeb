@@ -36,4 +36,6 @@ public interface IMenuService extends IService<Menu> {
     List<Menu> getAllMenus();
 
     RespBean delMenuById(Integer id);
+
+    RespBean addDepartment(Menu menu);
 }

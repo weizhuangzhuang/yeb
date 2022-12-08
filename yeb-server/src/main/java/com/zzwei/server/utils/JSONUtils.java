@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JSONUtils {
@@ -25,6 +26,42 @@ public class JSONUtils {
         System.out.println("JSONUtil.toJsonStr(beanString) = " + JSONUtil.toJsonStr(beanString));
         System.out.println("JSONUtil.toJsonStr(list) = " + JSONUtil.toJsonStr(list));
 
+        ArrayList<String> list1 = new ArrayList<>();
+        list1.add("张三");
+        list1.add("张四");
+        list1.add("四");
+        list1.add("张四");
+        list1.add("张四");
+        list1.add("张四");
+
+        ArrayList<String> list2 = new ArrayList<>();
+
+        for (String s : list1) {
+            if (s.startsWith("张三")) {
+                list2.add(s);
+            }
+        }
+
+        System.out.println("挑选list包含张三的结果：" + list2);
+
+        ArrayList<String> list3 = new ArrayList<>();
+        for (String ss : list2) {
+            if (ss.length() == 2) {
+                list3.add(ss);
+            }
+        }
+        System.out.println("挑选list长度为2：" + list3);
+
+        for (String s : list3) {
+            System.out.println("最终结果" + s);
+        }
+
+        String[] ss = new String[]{"zz", "aa", "cc"};
+        System.out.println(Arrays.toString(ss));
+        List<String> strings = Arrays.asList(ss);
+        for (String s : strings) {
+            System.out.println(s);
+        }
 
     }
 
